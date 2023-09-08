@@ -1,9 +1,9 @@
 # dev.yml
-name: master branch auto ci process script
+name: Deploy Automation (master)
 
 on: # 아래 job을 실행시킬 상황
   push:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   deploy:
