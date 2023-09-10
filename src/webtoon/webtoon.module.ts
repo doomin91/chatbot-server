@@ -11,4 +11,3 @@ import { Webtoon } from './entities/webtoon.entity';
   providers: [AdminWebtoonService, WebtoonRepository],
 })
 export class WebtoonModule {}
-≈
