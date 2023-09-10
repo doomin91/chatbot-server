@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import envFilePath from 'envs/env';
 import * as Joi from 'joi';
-import { WebtoonModule } from './webtoon/entities/webtoon.module';
+import { WebtoonModule } from './webtoon/webtoon.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
