@@ -4,6 +4,8 @@ import { ConfigModule } from '@nestjs/config';
 import envFilePath from 'envs/env';
 import * as Joi from 'joi';
 import { WebtoonModule } from './webtoon/webtoon.module';
+import { ScraperModule } from './scraper/scraper.module';
+import { WebtoonScraperModule } from './webtoon-scraper/webtoon-scraper.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -38,6 +40,8 @@ const envValidationSchema = Joi.object({
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
     WebtoonModule,
+    ScraperModule,
+    WebtoonScraperModule,
   ],
   controllers: [],
   providers: [],
