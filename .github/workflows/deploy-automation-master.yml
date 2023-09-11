@@ -22,5 +22,5 @@ jobs:
             cd /app/chatbot-server
             sudo pm2 stop server-prod
             sudo git pull origin master
-            sudo npm i --force
+            sudo npm ci --force
             sudo pm2 start server-prod
