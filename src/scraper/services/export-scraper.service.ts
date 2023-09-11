@@ -6,16 +6,13 @@ import * as cheerio from 'cheerio';
 export class ExportScraperService {
   async getContents(url) {
     try {
-      const html = await axios.get(url);
-
-      const $ = cheerio.load(html.data);
-      const $bodyList = $(
-        'div.WeekdayMainView__daily_all_wrap--UvRFc',
-      ).children('div');
-
-      $bodyList.each((i, el) => {
-        console.log($(el).find('h3').text());
+      const html = await axios.get(url, {
+        headers: {
+          'User-Agent':
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36',
+        },
       });
+      return html.data;
     } catch (e) {
       throw e;
     }

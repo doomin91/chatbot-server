@@ -1,4 +1,9 @@
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import envFilePath from 'envs/env';
@@ -6,6 +11,15 @@ import * as Joi from 'joi';
 import { WebtoonModule } from './webtoon/webtoon.module';
 import { ScraperModule } from './scraper/scraper.module';
 import { WebtoonScraperModule } from './webtoon-scraper/webtoon-scraper.module';
+import * as winston from 'winston';
+import {
+  utilities as nestWinstonModuleUtilities,
+  WinstonModule,
+} from 'nest-winston';
+import { ClsMiddleware, ClsModule, ClsService } from 'nestjs-cls';
+import { v4 as uuidv4 } from 'uuid';
+import packageJson from 'package.json';
+import LoggerMiddleware from './logger/logger.middleware';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -42,8 +56,60 @@ const envValidationSchema = Joi.object({
     WebtoonModule,
     ScraperModule,
     WebtoonScraperModule,
+    ClsModule.forRoot({
+      middleware: {
+        mount: true,
+        generateId: true,
+        idGenerator: (req: Request) => {
+          if (!req.headers['X-Request-Id']) {
+            req.headers['X-Request-Id'] = uuidv4();
+          }
+          return req.headers['X-Request-Id'];
+        },
+      },
+    }),
+    WinstonModule.forRootAsync({
+      imports: [ClsModule],
+      inject: [ClsService],
+      useFactory: async (cls: ClsService) => ({
+        transports: [
+          new winston.transports.Console({
+            level:
+              process.env.NODE_ENV === 'qa' ||
+              process.env.NODE_ENV === 'staging'
+                ? 'info'
+                : 'silly',
+            format: winston.format.combine(
+              winston.format.timestamp({
+                format: () => {
+                  const now = new Date().toISOString();
+                  return now;
+                },
+              }),
+              nestWinstonModuleUtilities.format.nestLike(packageJson.name),
+              winston.format((info) => {
+                info.traceId = cls.getId();
+                return info;
+              })(),
+              process.env.NODE_ENV === 'prod' ||
+                process.env.NODE_ENV === 'qa' ||
+                process.env.NODE_ENV === 'staging'
+                ? winston.format.json()
+                : winston.format.colorize(),
+            ),
+          }),
+        ],
+      }),
+    }),
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer): any {
+    consumer.apply(ClsMiddleware, LoggerMiddleware).forRoutes({
+      path: '*',
+      method: RequestMethod.ALL,
+    });
+  }
+}
