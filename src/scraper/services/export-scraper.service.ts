@@ -4,7 +4,7 @@ import * as cheerio from 'cheerio';
 
 @Injectable()
 export class ExportScraperService {
-  async getContents(url) {
+  async getContents(url: string) {
     try {
       const html = await axios.get(url, {
         headers: {
