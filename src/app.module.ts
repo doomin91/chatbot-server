@@ -20,6 +20,7 @@ import { ClsMiddleware, ClsModule, ClsService } from 'nestjs-cls';
 import { v4 as uuidv4 } from 'uuid';
 import packageJson from 'package.json';
 import LoggerMiddleware from './logger/logger.middleware';
+import { TwitchModule } from './twitch/twitch/twitch.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -101,9 +102,8 @@ const envValidationSchema = Joi.object({
         ],
       }),
     }),
+    TwitchModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer): any {
