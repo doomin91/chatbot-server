@@ -16,4 +16,12 @@ export class TwitchController {
   async getUsers(@Param('userId') userId: string) {
     return await this.twitchService.getUsers(userId);
   }
+
+  @ApiDoc({
+    summary: 'Create Poll',
+  })
+  @Post('/polls/')
+  async createPolls() {
+    return await this.twitchService.createPolls();
+  }
 }
