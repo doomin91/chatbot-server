@@ -21,6 +21,7 @@ jobs:
           script: | # 실행할 스크립트
             cd /app/chatbot-server
             sudo pm2 stop server-prod
+            sudo rm -rf package-lock.json
             sudo git pull origin master
             sudo npm ci --force
             sudo pm2 start server-prod
