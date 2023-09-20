@@ -21,6 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
 import packageJson from 'package.json';
 import LoggerMiddleware from './logger/logger.middleware';
 import { TwitchModule } from './twitch/twitch/twitch.module';
+import { TwitchChatbotGateway } from './twitch/twitch-chatbot/gateway/twitch-chatbot.gateway';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -103,6 +104,7 @@ const envValidationSchema = Joi.object({
       }),
     }),
     TwitchModule,
+    TwitchChatbotGateway,
   ],
 })
 export class AppModule implements NestModule {
