@@ -4,7 +4,7 @@ import { Client } from 'tmi.js';
 
 @Injectable()
 export class TwitchChatbotService {
-  public client;
+  client;
 
   connect() {
     const opts = {
@@ -14,9 +14,7 @@ export class TwitchChatbotService {
       },
       channels: ['kimduumin'],
     };
-
     this.client = new Client(opts);
-
     this.client.connect();
 
     return this.client;

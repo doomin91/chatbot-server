@@ -9,36 +9,36 @@ export class TwitchChatbotGateway {
 
   afterInit() {
     this.client = this.twtichChatbotService.connect();
-    this.client.on('message', this.onMessageHandler);
-    this.client.on('connected', this.onConnectedHandler);
+
+    this.client.on('connected', (addr, port) => {
+      console.log(`* Connected to ${addr}:${port}`);
+    });
+
+    this.client.on('message', (target, context, msg, self) => {
+      if (self) {
+        return;
+      } // Ignore messages from the bot
+
+      const commandName = msg.trim();
+      this.onMessageHandler(target, context, commandName);
+    });
   }
 
-  onMessageHandler(target, context, msg, self) {
-    console.log(typeof this.client);
-
-    if (self) {
-      return;
-    } // Ignore messages from the bot
-
-    // Remove whitespace from chat message
-    const commandName = msg.trim();
-
+  onMessageHandler(target, context, commandName) {
     // If the command is known, let's execute it
-    if (commandName === '!dice') {
-      const num = this.rollDice;
-      this.client.say(target, `You rolled a ${num}`);
-      console.log(`* Executed ${commandName} command`);
-    } else {
-      console.log(`* Unknown command ${commandName}`);
+
+    switch (commandName) {
+      case '!헬기':
+        const num = this.rollDice();
+        this.client.say(target, `You rolled a ${num}`);
+        break;
+      default:
+        this.client.say(target, `You typed ${commandName}`);
     }
   }
 
   rollDice() {
     const sides = 6;
     return Math.floor(Math.random() * sides) + 1;
-  }
-
-  onConnectedHandler(addr, port) {
-    console.log(`* Connected to ${addr}:${port}`);
   }
 }
