@@ -21,7 +21,7 @@ import { v4 as uuidv4 } from 'uuid';
 import packageJson from 'package.json';
 import LoggerMiddleware from './logger/logger.middleware';
 import { TwitchModule } from './twitch/twitch/twitch.module';
-import { TwitchChatbotGateway } from './twitch/twitch-chatbot/gateway/twitch-chatbot.gateway';
+import { TwitchChatbotModule } from './twitch/twitch-chatbot/twtich-chatbot.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -51,7 +51,7 @@ const envValidationSchema = Joi.object({
       schema: process.env.DB_SCHEMA_NAME,
       synchronize: true,
       logging: process.env.DB_LOGGING === 'true' ? true : false,
-      autoLoadEntities: true,
+      autoLoadEntities: false,
       // logger: new CustomDbLogger(),
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
@@ -104,7 +104,7 @@ const envValidationSchema = Joi.object({
       }),
     }),
     TwitchModule,
-    TwitchChatbotGateway,
+    TwitchChatbotModule,
   ],
 })
 export class AppModule implements NestModule {
