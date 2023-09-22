@@ -18,6 +18,14 @@ export class TwitchController {
   }
 
   @ApiDoc({
+    summary: 'Get Twitch Channel',
+  })
+  @Get('/channel/:broadcasterId')
+  async getChannels(@Param('broadcasterId') broadcasterId: string) {
+    return await this.twitchService.getChannels(broadcasterId);
+  }
+
+  @ApiDoc({
     summary: 'Create Poll',
   })
   @Post('/polls/')
