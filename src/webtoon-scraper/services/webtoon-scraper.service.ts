@@ -23,7 +23,6 @@ export class WebtoonScraperService {
             url2,
           );
           result.push(webtoonDetail);
-          break;
         }
       }
     }
