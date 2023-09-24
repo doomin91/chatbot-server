@@ -14,37 +14,30 @@ import { AdminWebtoonService } from '../services/admin-webtoon.service';
 import { ListResponse } from 'src/common/dtos/list-response.dto';
 import { WebtoonDto } from '../dtos/webtoon.dto';
 import { GenerateWebtoonDto } from '../dtos/generate-webtoon.dto';
+import { WebtoonNaverDto } from '../dtos/webtoon-naver.dto';
 
-@Controller('admin/webtoons')
-@ApiTags('웹툰 관리')
-export class AdminWebtoonController {
+@Controller('admin/webtoons-naver')
+@ApiTags('네이버웹툰 관리')
+export class AdminWebtoonNaverController {
   constructor(private adminWebtoonService: AdminWebtoonService) {}
+
   @ApiDoc({
-    summary: '웹툰 항목 조회',
-    responseModel: WebtoonDto,
+    summary: '네이버 웹툰 항목 조회',
+    responseModel: WebtoonNaverDto,
     isArrayResponse: true,
   })
   @Get('')
-  async findAdminWebtoons(): Promise<ListResponse<WebtoonDto[]>> {
-    const { list, count } = await this.adminWebtoonService.findAdminWebtoons();
+  async findAdminNaverWebtoons(): Promise<ListResponse<WebtoonNaverDto[]>> {
+    const { list, count } =
+      await this.adminWebtoonService.findAdminNaverWebtoons();
     return new ListResponse(list, count);
   }
 
   @ApiDoc({
-    summary: '웹툰 항목 추가',
+    summary: '네이버 웹툰 스크래핑',
   })
   @Post('')
-  async insertAdminWebtoons(
-    @Body() generateWebtoonDto: GenerateWebtoonDto,
-  ): Promise<void> {
-    await this.adminWebtoonService.insertWebtoons(generateWebtoonDto);
-  }
-
-  @ApiDoc({
-    summary: '웹툰 항목 수정',
-  })
-  @Delete('')
-  async deleteAdminWebtoons(): Promise<ObjectResponse<number>> {
-    return new ObjectResponse(1);
+  async crollingNaverWebtoons() {
+    return await this.adminWebtoonService.crollingNaverWebtoons();
   }
 }

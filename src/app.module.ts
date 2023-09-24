@@ -51,7 +51,7 @@ const envValidationSchema = Joi.object({
       schema: process.env.DB_SCHEMA_NAME,
       synchronize: true,
       logging: process.env.DB_LOGGING === 'true' ? true : false,
-      autoLoadEntities: false,
+      autoLoadEntities: true,
       // logger: new CustomDbLogger(),
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),

@@ -7,6 +7,6 @@ import { WebtoonScraperService } from './services/webtoon-scraper.service';
   imports: [ScraperModule],
   controllers: [WebtoonScraperController],
   providers: [WebtoonScraperService],
-  exports: [],
+  exports: [WebtoonScraperService],
 })
 export class WebtoonScraperModule {}
