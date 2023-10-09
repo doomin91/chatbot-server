@@ -49,6 +49,29 @@ export class AdminWebtoonService {
     }
   }
 
+  async crollingNaverFinalWebtoons() {
+    const webtoons = await this.webtoonScraperService.getFinalWebtoonInfo();
+
+    for (const webtoon of webtoons) {
+      let webtoonNaverDto = new WebtoonNaverDto();
+
+      const curationTagList = [];
+      for (const tag of webtoon['curationTagList']) {
+        curationTagList.push(tag['tagName']);
+      }
+      webtoon['curationTagList'] = curationTagList;
+
+      const communityArtists = [];
+      for (const artist of webtoon['communityArtists']) {
+        communityArtists.push(artist['name']);
+      }
+      webtoon['communityArtists'] = communityArtists;
+
+      webtoonNaverDto = webtoon;
+      await this.webtoonNaverRepository.insertWebtoonNavers(webtoonNaverDto);
+    }
+  }
+
   async findAdminNaverWebtoons() {
     return await this.webtoonNaverRepository.findAdminNaverWebtoons();
   }

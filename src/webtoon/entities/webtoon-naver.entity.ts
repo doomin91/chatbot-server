@@ -222,8 +222,8 @@ export class WebtoonNaver extends CoreSoftEntity {
     minLength: 1,
     maxLength: 3000,
   })
-  @Column({ type: 'varchar', length: 3000, nullable: true })
-  artists: string;
+  @Column({ type: 'varchar', length: 3000, nullable: true, array: true })
+  artists: string[];
 
   @ApiProperty({
     required: false,
@@ -234,6 +234,6 @@ export class WebtoonNaver extends CoreSoftEntity {
     minLength: 1,
     maxLength: 3000,
   })
-  @Column({ type: 'varchar', length: 3000, nullable: true })
-  communityArtists: string;
+  @Column({ type: 'varchar', length: 3000, nullable: true, array: true })
+  communityArtists: string[];
 }

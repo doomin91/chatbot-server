@@ -40,4 +40,12 @@ export class AdminWebtoonNaverController {
   async crollingNaverWebtoons() {
     return await this.adminWebtoonService.crollingNaverWebtoons();
   }
+
+  @ApiDoc({
+    summary: '네이버 완결웹툰 스크래핑',
+  })
+  @Post('final')
+  async crollingNaverFinalWebtoons() {
+    return await this.adminWebtoonService.crollingNaverFinalWebtoons();
+  }
 }
