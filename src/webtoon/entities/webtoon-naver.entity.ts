@@ -215,25 +215,37 @@ export class WebtoonNaver extends CoreSoftEntity {
 
   @ApiProperty({
     required: false,
-    description: '작가',
+    description: '웹툰 글작가',
   })
   @IsCustomString({
     required: false,
     minLength: 1,
-    maxLength: 3000,
+    maxLength: 1000,
   })
-  @Column({ type: 'varchar', length: 3000, nullable: true })
-  artists: string;
+  @Column({ type: 'varchar', length: 1000, nullable: true, array: true })
+  writers: string[];
 
   @ApiProperty({
     required: false,
-    description: '관련 작가',
+    description: '웹툰 그림작가',
   })
   @IsCustomString({
     required: false,
     minLength: 1,
-    maxLength: 3000,
+    maxLength: 1000,
   })
-  @Column({ type: 'varchar', length: 3000, nullable: true })
-  communityArtists: string;
+  @Column({ type: 'varchar', length: 1000, nullable: true, array: true })
+  painters: string[];
+
+  @ApiProperty({
+    required: false,
+    description: '원작가',
+  })
+  @IsCustomString({
+    required: false,
+    minLength: 1,
+    maxLength: 1000,
+  })
+  @Column({ type: 'varchar', length: 1000, nullable: true, array: true })
+  origins: string[];
 }

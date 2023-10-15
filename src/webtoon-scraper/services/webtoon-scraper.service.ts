@@ -28,4 +28,24 @@ export class WebtoonScraperService {
     }
     return result;
   }
+
+  async getFinalWebtoonInfo() {
+    const result = [];
+
+    for (let i = 1; i <= 45; i++) {
+      const url = `https://comic.naver.com/api/webtoon/titlelist/finished?page=${i}&order=UPDATE`;
+      const contents = await this.exportScraperService.getContents(url);
+      if (!_.isNil(contents.titleList)) {
+        for (const webtoonItem of contents.titleList) {
+          const { titleId } = webtoonItem;
+          const url2 = `https://comic.naver.com/api/article/list/info?titleId=${titleId}`;
+          const webtoonDetail = await this.exportScraperService.getContents(
+            url2,
+          );
+          result.push(webtoonDetail);
+        }
+      }
+    }
+    return result;
+  }
 }

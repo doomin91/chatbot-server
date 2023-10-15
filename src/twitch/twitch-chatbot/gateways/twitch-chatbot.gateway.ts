@@ -1,11 +1,15 @@
+import { TwitchZomboidService } from 'src/twitch/twtich-zomboid/twitch-zomboid.service';
 import { TwitchChatbotService } from '../services/twtich-chatbot.service';
-import { Injectable } from '@nestjs/common';
 import { WebSocketGateway } from '@nestjs/websockets';
+import { TwitchZomboidLogDto } from 'src/twitch/twtich-zomboid/dtos/twitch-zomboid-log.dto';
 
 @WebSocketGateway()
 export class TwitchChatbotGateway {
   client;
-  constructor(private twtichChatbotService: TwitchChatbotService) {}
+  constructor(
+    private twtichChatbotService: TwitchChatbotService,
+    private twitchZomboidService: TwitchZomboidService,
+  ) {}
 
   afterInit() {
     this.client = this.twtichChatbotService.connect();
@@ -27,18 +31,27 @@ export class TwitchChatbotGateway {
   onMessageHandler(target, context, commandName) {
     // If the command is known, let's execute it
 
-    switch (commandName) {
-      case '!헬기':
-        const num = this.rollDice();
-        this.client.say(target, `You rolled a ${num}`);
-        break;
-      default:
-        this.client.say(target, `You typed ${commandName}`);
-    }
-  }
+    console.log(target);
+    console.log(context);
 
-  rollDice() {
-    const sides = 6;
-    return Math.floor(Math.random() * sides) + 1;
+    const twitchZomboidLog = new TwitchZomboidLogDto();
+
+    twitchZomboidLog.displayName = context['display-name'];
+    twitchZomboidLog.firstMsg = context['first-msg'];
+    twitchZomboidLog.roomId = context['room-id'];
+    twitchZomboidLog.subscriber = context['subscriber'];
+    twitchZomboidLog.turbo = context['turbo'];
+    twitchZomboidLog.userId = context['user-id'];
+    twitchZomboidLog.userName = context['username'];
+    twitchZomboidLog.messageType = context['message-type'];
+
+    switch (commandName) {
+      case '!좀비':
+        twitchZomboidLog.eventType = '좀비';
+        this.twitchZomboidService.insertTwitchZomboidLog(twitchZomboidLog);
+        // const num = this.rollDice();
+        // this.client.say(target, `You rolled a ${num}`);
+        break;
+    }
   }
 }
