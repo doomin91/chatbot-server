@@ -1,14 +1,18 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { KakaoRequestDto } from '../dtos/kakao-skill-request-dto';
+import { KakaoRequestBodyDto } from '../dtos/kakao-skill-request-dto';
 
 @Controller('webtoons')
 @ApiTags('웹툰')
 export class WebtoonController {
   @Post('test')
-  async webtoonTest(req: KakaoRequestDto, res: Response) {
+  async webtoonTest(
+    @Req() req: Request,
+    @Res() res: Response,
+    @Body() kakaoRequestBodyDto: KakaoRequestBodyDto,
+  ) {
     try {
-      return req['body'];
+      return kakaoRequestBodyDto;
     } catch (e) {
       return { errorMessage: e };
     }

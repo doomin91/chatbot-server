@@ -1,3 +1,3 @@
-export class KakaoRequestDto extends Request {
-  userRequest: JSON;
+export class KakaoRequestBodyDto {
+  userRequest: any;
 }
