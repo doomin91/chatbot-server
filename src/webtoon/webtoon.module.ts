@@ -8,13 +8,18 @@ import { WebtoonNaver } from './entities/webtoon-naver.entity';
 import { WebtoonNaverRepository } from './repositories/webtoon-naver.repository';
 import { WebtoonScraperModule } from 'src/webtoon-scraper/webtoon-scraper.module';
 import { AdminWebtoonNaverController } from './controllers/admin-webtoon-naver.controller';
+import { WebtoonController } from './controllers/webtoon.controller';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([Webtoon, WebtoonNaver]),
     WebtoonScraperModule,
   ],
-  controllers: [AdminWebtoonController, AdminWebtoonNaverController],
+  controllers: [
+    AdminWebtoonController,
+    AdminWebtoonNaverController,
+    WebtoonController,
+  ],
   providers: [AdminWebtoonService, WebtoonRepository, WebtoonNaverRepository],
 })
 export class WebtoonModule {}
