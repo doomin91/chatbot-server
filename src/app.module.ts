@@ -23,6 +23,7 @@ import LoggerMiddleware from './logger/logger.middleware';
 import { TwitchModule } from './twitch/twitch/twitch.module';
 import { TwitchChatbotModule } from './twitch/twitch-chatbot/twtich-chatbot.module';
 import { TwitchZomboidModule } from './twitch/twtich-zomboid/twitch-zomboid.module';
+import { KakaoChatBotModule } from './kakao-chatbot/kakao-chatbot.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -107,6 +108,7 @@ const envValidationSchema = Joi.object({
     TwitchModule,
     TwitchChatbotModule,
     TwitchZomboidModule,
+    KakaoChatBotModule,
   ],
 })
 export class AppModule implements NestModule {

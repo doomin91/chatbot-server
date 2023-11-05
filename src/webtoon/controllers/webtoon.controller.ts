@@ -5,17 +5,4 @@ import { Request, Response } from 'express';
 
 @Controller('webtoons')
 @ApiTags('웹툰')
-export class WebtoonController {
-  @Post('test')
-  async webtoonTest(
-    @Req() req: Request,
-    @Res() res: Response,
-    // @Body() kakaoRequestBodyDto: KakaoRequestBodyDto,
-  ) {
-    try {
-      res.json(req.body);
-    } catch (e) {
-      return { errorMessage: e };
-    }
-  }
-}
+export class WebtoonController {}
