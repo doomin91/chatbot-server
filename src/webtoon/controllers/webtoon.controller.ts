@@ -7,6 +7,10 @@ import { KakaoRequestDto } from '../dtos/kakao-skill-request-dto';
 export class WebtoonController {
   @Post('test')
   async webtoonTest(req: KakaoRequestDto, res: Response) {
-    return req.body;
+    try {
+      return req['body'];
+    } catch (e) {
+      return { errorMessage: e };
+    }
   }
 }
