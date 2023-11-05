@@ -14,6 +14,6 @@ export class KakaoChatBotLogRepository {
   async insertKakaoChatBotLog(
     generateKakaoChatBotLogDto: GenerateKakaoChatBotLogDto,
   ) {
-    return await this.repository.save(generateKakaoChatBotLogDto);
+    await this.repository.save(generateKakaoChatBotLogDto);
   }
 }

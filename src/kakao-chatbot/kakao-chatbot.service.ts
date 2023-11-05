@@ -4,6 +4,7 @@ import { KakaoChatBotLogRepository } from './repositories/kakao-chatbot-log.repo
 import { Request } from 'express';
 import { GenerateKakaoChatBotLogDto } from './dtos/generate-kakao-chatbot-log.dto';
 import { KakaoChatBotDto } from './dtos/kakao-chatbot.dto';
+import { GenerateKakaoChatBotUserDto } from './dtos/generate-kakao-chatbot-user.dto';
 
 @Injectable()
 export class KakaoChatBotService {
@@ -17,13 +18,26 @@ export class KakaoChatBotService {
 
     const userId = userRequest.user.id;
     const utterance = userRequest.utterance;
-    console.log(userId);
     const generateKakaoChatBotLogDto = new GenerateKakaoChatBotLogDto();
     generateKakaoChatBotLogDto.userId = userId;
     generateKakaoChatBotLogDto.utterance = utterance;
     const result = await this.kakaoChatBotLogRepository.insertKakaoChatBotLog(
       generateKakaoChatBotLogDto,
     );
+
+    const existUser =
+      await this.kakaoChatBotUserRepository.findKakaoChatBotUserByUserId(
+        userId,
+      );
+
+    if (!existUser) {
+      const generateKakaoChatBotUser = new GenerateKakaoChatBotUserDto();
+      generateKakaoChatBotUser.userId = userId;
+      generateKakaoChatBotUser.status = 'none';
+      await this.kakaoChatBotUserRepository.insertKakaoChatBotUser(
+        generateKakaoChatBotUser,
+      );
+    }
 
     return result;
   }

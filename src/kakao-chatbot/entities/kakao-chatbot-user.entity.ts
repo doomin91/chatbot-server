@@ -13,9 +13,13 @@ export class KakaoChatBotUser extends CoreSoftEntity {
     description: '유저 ID',
     required: true,
   })
-  @IsCustomNumber({ required: true, minNumber: 1, maxNumber: 100 })
-  @Column({ type: 'int', nullable: false })
-  userId: number;
+  @IsCustomString({
+    required: true,
+    minLength: 1,
+    maxLength: 100,
+  })
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  userId: string;
 
   @ApiProperty({
     required: true,
