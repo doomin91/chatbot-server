@@ -10,12 +10,16 @@ import { Column, Entity } from 'typeorm';
 export class KakaoChatBotLog extends CoreSoftEntity {
   @ApiProperty({
     example: 18,
-    description: '우저 ID',
+    description: '유저 ID',
     required: true,
   })
-  @IsCustomNumber({ required: true, minNumber: 1, maxNumber: 100 })
-  @Column({ type: 'int', nullable: false })
-  userId: number;
+  @IsCustomString({
+    required: true,
+    minLength: 1,
+    maxLength: 100,
+  })
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  userId: string;
 
   @ApiProperty({
     required: true,

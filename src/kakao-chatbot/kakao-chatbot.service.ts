@@ -14,9 +14,11 @@ export class KakaoChatBotService {
 
   async survey(kakaoChatBotDto: KakaoChatBotDto) {
     const { userRequest } = kakaoChatBotDto;
-    const userId = userRequest.user.userId;
-    const utterance = userRequest.user.utterance;
-    let generateKakaoChatBotLogDto: GenerateKakaoChatBotLogDto;
+
+    const userId = userRequest.user.id;
+    const utterance = userRequest.utterance;
+    console.log(userId);
+    const generateKakaoChatBotLogDto = new GenerateKakaoChatBotLogDto();
     generateKakaoChatBotLogDto.userId = userId;
     generateKakaoChatBotLogDto.utterance = utterance;
     const result = await this.kakaoChatBotLogRepository.insertKakaoChatBotLog(

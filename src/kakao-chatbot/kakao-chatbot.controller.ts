@@ -7,10 +7,6 @@ export class KakaoChatBotController {
   constructor(private kakaoChatBotService: KakaoChatBotService) {}
   @Post('survey')
   async survey(@Body() kakaoChatBotDto: KakaoChatBotDto) {
-    try {
-      return await this.kakaoChatBotService.survey(kakaoChatBotDto);
-    } catch (e) {
-      return { errorMessage: '뭔가 잘못됐어' };
-    }
+    return await this.kakaoChatBotService.survey(kakaoChatBotDto);
   }
 }
