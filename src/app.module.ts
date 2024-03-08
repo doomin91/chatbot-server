@@ -57,9 +57,9 @@ const envValidationSchema = Joi.object({
       // logger: new CustomDbLogger(),
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
-    WebtoonModule,
+    // WebtoonModule,
     ScraperModule,
-    WebtoonScraperModule,
+    // WebtoonScraperModule,
     ClsModule.forRoot({
       middleware: {
         mount: true,
@@ -105,9 +105,9 @@ const envValidationSchema = Joi.object({
         ],
       }),
     }),
-    TwitchModule,
-    TwitchChatbotModule,
-    TwitchZomboidModule,
+    // TwitchModule,
+    // TwitchChatbotModule,
+    // TwitchZomboidModule,
     KakaoChatBotModule,
   ],
 })
