@@ -8,10 +8,10 @@ async function bootstrap() {
   app.enableCors();
 
   const config = new DocumentBuilder()
-    .setTitle('dominic server')
+    .setTitle('nest-prototype-server')
     .setDescription('This is API description')
     .setVersion('0.0.0')
-    .addTag('dominic server')
+    .addTag('nest-prototype-server')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

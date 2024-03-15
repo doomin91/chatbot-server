@@ -8,9 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import envFilePath from 'envs/env';
 import * as Joi from 'joi';
-import { WebtoonModule } from './webtoon/webtoon.module';
 import { ScraperModule } from './scraper/scraper.module';
-import { WebtoonScraperModule } from './webtoon-scraper/webtoon-scraper.module';
 import * as winston from 'winston';
 import {
   utilities as nestWinstonModuleUtilities,
@@ -20,10 +18,6 @@ import { ClsMiddleware, ClsModule, ClsService } from 'nestjs-cls';
 import { v4 as uuidv4 } from 'uuid';
 import packageJson from 'package.json';
 import LoggerMiddleware from './logger/logger.middleware';
-import { TwitchModule } from './twitch/twitch/twitch.module';
-import { TwitchChatbotModule } from './twitch/twitch-chatbot/twtich-chatbot.module';
-import { TwitchZomboidModule } from './twitch/twtich-zomboid/twitch-zomboid.module';
-import { KakaoChatBotModule } from './kakao-chatbot/kakao-chatbot.module';
 
 const envValidationSchema = Joi.object({
   PORT: Joi.number().required(),
@@ -57,9 +51,6 @@ const envValidationSchema = Joi.object({
       // logger: new CustomDbLogger(),
       ssl: process.env.DB_SSL === 'true' ? true : false,
     }),
-    // WebtoonModule,
-    ScraperModule,
-    // WebtoonScraperModule,
     ClsModule.forRoot({
       middleware: {
         mount: true,
@@ -105,10 +96,7 @@ const envValidationSchema = Joi.object({
         ],
       }),
     }),
-    // TwitchModule,
-    // TwitchChatbotModule,
-    // TwitchZomboidModule,
-    KakaoChatBotModule,
+    ScraperModule,
   ],
 })
 export class AppModule implements NestModule {
